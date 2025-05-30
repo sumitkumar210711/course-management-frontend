@@ -33,7 +33,7 @@ const LoginPage = () => {
             const loginResult = await registration(email, password);
             console.log("login results:", loginResult);
 
-            const user = loginResult.data.data.loggedUser.user;
+            const user = loginResult.data.data.loggedUser;
             const token = loginResult.data.data.token;
             displayToastSuccess("Logged In Successfull");
             console.log("token and user", token, user.role);
