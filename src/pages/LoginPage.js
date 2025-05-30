@@ -31,7 +31,7 @@ const LoginPage = () => {
 
         try{
             const loginResult = await registration(email, password);
-            console.log("login results", loginResult);
+            console.log("login results:", loginResult);
 
             const user = loginResult.data.data.loggedUser.user;
             const token = loginResult.data.data.token;
