@@ -3,14 +3,20 @@
 This file is a react page which allows users to login as admin or student or teacher with the authenticated email id 
 and password.
 */
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect, useContext} from "react";
 import {ToastContainer, toast} from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 import { displayToastError, displayToastSuccess } from "../utils/toastHandler";
 import { registration } from "../services/authAPI";
+import { userAccountContext } from "../contextAPI/userAccountContext";
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { login , logout } = useContext(userAccountContext);
+    const { userAuth} =useContext(userAccountContext);
+    const navigateRoute = useNavigate();
+    
     
     const handleLoginForm = async(e) => {
         e.preventDefault();
@@ -25,12 +31,40 @@ const LoginPage = () => {
 
         try{
             const loginResult = await registration(email, password);
-            console.log("login Results", loginResult);
-            displayToastSuccess("Logged In Successfull")
-        
+            
+
+            const user = loginResult.data.data.loggedUser.user;
+            const token = loginResult.data.data.token;
+            displayToastSuccess("Logged In Successfull");
+            console.log("token and user", token, user.role);
+            
+            login(token, user);
+
+            if(user.role === 'admin'){
+                setTimeout(()=>{
+                navigateRoute('/admin-dashboard')                
+                }, 1500);
+            }
+            if(user.role === 'teacher'){
+                setTimeout(()=>{
+                navigateRoute('/teacher-dashboard')                
+                }, 1500);
+            }
+            if(user.role === 'student'){
+                setTimeout(()=>{
+                navigateRoute('/student-dashboard')                
+                }, 1500);
+            }
+            
         }catch(error){
-            console.log("Error",error);
-            displayToastError(error.response.data.error);
+            console.log("Error",error.message);
+            if(error.message === 'Network Error'){
+                displayToastError(error.message);
+            }
+            if(error?.response?.data){
+                displayToastError(error?.response?.data?.error);
+            }
+            logout();
         }
 
     }   

@@ -1,7 +1,7 @@
 import {toast} from 'react-toastify';
 
 const style = {
-    className : "mx-4 py-2 mt-16 md:m-8"
+    className : "mx-4 py-2 mt-20 md:m-20"
 }
 const toastOptions = {
     position:"top-center",
