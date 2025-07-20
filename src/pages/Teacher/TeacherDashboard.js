@@ -13,7 +13,7 @@ export const TeacherDashboard = ()=>{
     return (
         <div className="w-full bg-white h-screen overflow-y-auto fixed ">
             
-            <div className="mt-16 ml-6 md:ml-16 text-[30px] font-bold text-gray-800">
+            <div className="mt-6 ml-6 md:ml-16 text-[30px] font-bold text-gray-800">
                 Teacher Dashboard
             </div>
         <div className="mt-2 ml-6 md:ml-16 mr-4 md:mr-20 md:gap-16 gap-10 flex flex-row">

@@ -36,7 +36,7 @@ const AdminDashboard = () => {
   return (
     <>
             <ToastContainer />
-      <div className="md:grid md:grid-cols-[240px_1fr] md:fixed w-full overflow-hidden bg-white mt-10">
+      <div className="flex flex-row bg-white">
         
         <SidebarComponent
           selectedOption={selectedOption}
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
 
 
 
-        <div className="ml-0 md:ml-4 p-4 md:mt-11 overflow-y-auto ">
+        <div className="ml-0 md:ml-4 p-4 md:mt-11 overflow-y-auto w-full">
           
           <div className="md:hidden mb-4">
             <button

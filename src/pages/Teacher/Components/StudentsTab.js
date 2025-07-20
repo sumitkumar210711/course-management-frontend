@@ -1,60 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { EnrollmentForm } from './Modals/EnrollmentForm';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
+import { userAccountContext } from '../../../contextAPI/userAccountContext';
+import { getStudentsByTeacherId } from '../../../services/mappingApi';
 export const StudentsTab = () => {
-  const [students, setStudents] = useState([]);
-  const [enrollmentModal, setEnrollmentModal] =useState(false);
+ 
+ const {userAuth} =useContext(userAccountContext);
 
-  const [currentPage, setCurrentPage] = useState(1);
+ 
+ const { data: teacherStudents = [], isLoading, isError,refetch } = useQuery({
+    queryKey: ['teacherStudents', userAuth.token],
+    queryFn: () => getStudentsByTeacherId(userAuth.user.userId,userAuth.token),
+  });
+  
+ const [currentPage, setCurrentPage] = useState(1);
   const studentsPerPage = 4;
 
   const indexOfLast = currentPage * studentsPerPage;
   const indexOfFirst = indexOfLast - studentsPerPage;
-  const currentStudents = students.slice(indexOfFirst, indexOfLast);
+  const currentStudents = teacherStudents.slice(indexOfFirst, indexOfLast);
 
-  const totalPages = Math.ceil(students.length / studentsPerPage);
-
-  const handleModal = ()=>{
-    setEnrollmentModal(!enrollmentModal);
-  }
-
-  
+  const totalPages = Math.ceil(teacherStudents.length / studentsPerPage);
 
 
-useEffect(() => {
-    const dummyStudents = [
-      {
-        _id: '1',
-        name: 'Dr. Ramesh Verma',
-        email: 'ramesh.verma@example.com',
-        courses_Enrolled: ['Math 101', 'Physics 201'],
-      },
-      {
-        _id: '2',
-        name: 'Ms. Anjali Mehta',
-        email: 'anjali.mehta@example.com',
-        courses_Enrolled: ['English Literature'],
-      },
-      {
-        _id: '3',
-        name: 'Mr. Arjun Sen',
-        email: 'arjun.sen@example.com',
-        courses_Enrolled: ['Computer Science'],
-      },
-    ];
-    setStudents(dummyStudents);
-  }, []);
 
+ const tablehead  = "py-3 px-6 text-left text-[15px] text-black border border-r-2 border-gray-800";
+const tabledata  = "py-3 px-6 text-left text-[14px] text-black border border-r-2 border-gray-800";
 
-const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray-800";
 
   return (
     <div className=" w-full md:mb-32 mb-44 pt-4">
-    <button className=' text-[16px] font-medium float-right md:mr-0
-         text-black border px-4 py-2 rounded-lg shadow-xl border-gray-600 bg-slate-400 mb-2'
-         onClick={()=> handleModal()}>
-            Enrollment Form
-                    </button>
+    
                 <div className='overflow-auto h-[350px] w-full border border-gray-400'>
           
       <table className="w-full overflow-y-auto border border-collapse
@@ -66,6 +42,7 @@ const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray
             <th className={tablehead}>Student Id</th>
             <th className={tablehead}>Student Name</th>
             <th className={tablehead}>Student Email</th>
+            <th className={tablehead}>Student Phone</th>
             <th className={tablehead}>Courses Enrolled</th>
             
           </tr>
@@ -74,10 +51,11 @@ const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray
           {currentStudents.length > 0 ? (
             currentStudents.map((student, index) => (
               <tr key={student._id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className={tablehead}>{index + 1}</td>
-                <td className={tablehead}>{student.name}</td>
-                <td className={tablehead}>{student.email}</td>
-                <td className={tablehead}>{student.courses_Enrolled?.length || 0}</td>
+                <td className={tabledata}>{index + 1}</td>
+                <td className={tabledata}>{student.user.name}</td>
+                <td className={tabledata}>{student.user.email}</td>
+                <td className={tabledata}>{student.phone}</td>
+                <td className={tabledata}>{student.courses_Enrolled}</td>
                 
               </tr>
             ))
@@ -113,12 +91,7 @@ const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray
         </button>
       </div>
 
-    {
-      enrollmentModal &&(
-      <EnrollmentForm handleModal={handleModal}/>
-    )
-
-    }
+  
 
 
     </div>

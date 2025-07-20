@@ -19,3 +19,21 @@ export const addEditCourse = async(courseData, token) =>{
     }
 
 }
+
+export const fetchCourses = async(token) =>{
+    try{
+        const res = await axios.get(`${reactBackendUrl}/view-courses`,{
+            headers: {
+                "content-Type":"application/json",
+                Authorization: `Bearer ${token}`
+            },
+        });
+        console.log("response",res);
+        console.log("courses fetched from the backend",res.data.data)
+        return res.data.data;
+    }catch(error){
+        throw error;
+
+    }
+
+}

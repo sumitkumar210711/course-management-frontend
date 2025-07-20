@@ -4,8 +4,9 @@ import { userAccountContext } from "../contextAPI/userAccountContext";
 const Header = () => {
 
     const {logout, userAuth} = useContext(userAccountContext);
+
     return (
-        <header className="fixed w-full flex flex-row justify-between top-0 bg-blue-400 text-black shadow-md
+        <header className=" w-full flex flex-row justify-between top-0 bg-blue-400 text-black shadow-md
          pl-6 pt-4 pb-4 pr-2 md:pl-16 md:pr-10 z-50 ">
             <h1 className="text-[20px] md:text-[26px] font-bold">Course Management System</h1>
 

@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { userAccountContext } from "../../../contextAPI/userAccountContext";
 import { fetchTeachers } from "../../../services/TeacherService/TeacherApi";
 import { fetchStudent } from "../../../services/StudentService/StudentApi";
+import { fetchCourses } from "../../../services/CourseServices/CourseApi";
 
 export const Home = () => {
   const { userAuth } = useContext(userAccountContext);
@@ -18,6 +19,13 @@ export const Home = () => {
     queryFn: () => fetchStudent(userAuth.token),
   });
 
+
+  
+  const { data: courses = [], isLoading: loadingCourses } = useQuery({
+      queryKey: ['courses', userAuth.token],
+      queryFn: () => fetchCourses(userAuth.token),
+    });
+  
   const cardStyle =
     "h-[250px] w-[300px] rounded-xl shadow-xl bg-white border border-gray-300 flex flex-col justify-center items-center p-6 hover:shadow-2xl transition-shadow duration-300";
 
@@ -48,7 +56,7 @@ export const Home = () => {
       <div className={cardStyle}>
         <FaBook className="text-6xl text-yellow-600" />
         <div className={titleStyle}>Total Courses</div>
-        <div className={countStyle}>8</div>
+        <div className={countStyle}>{loadingCourses ? "..." : courses.length}</div>
       </div>
     </div>
   );

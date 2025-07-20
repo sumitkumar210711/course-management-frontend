@@ -36,5 +36,29 @@ export const getTeacherByStudentId = async (studentId, token) => {
       Authorization: `Bearer ${token}`,
     },
   });
+   console.log("Teachers by Student Id", res);
   return res.data.data;
+};
+
+
+export const assignCourseToStudent = async (studentId, courseIds, token) => {
+  const data = {
+    studentId: studentId,
+    courseIds: courseIds, // array of course IDs
+  };
+  try {
+    const res = await axios.post(
+      `${reactBackendUrl}/student/assign-courses`,
+      data,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
 };

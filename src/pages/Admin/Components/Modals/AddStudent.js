@@ -59,7 +59,13 @@ const handleSave = async () => {
             const res = await registerStudent(studentData, userAuth.token);
             console.log("Student Registered Successfully", res);
             displayToastSuccess(`Student ${studentData.name} Registered Successfully`);
-            handleModal();
+               setTimeout(() => {
+          handleModal();
+        }, 1500);
+            setName("");
+            setEmailId("");
+            setPassword("");
+            setPhoneNo("");
     
         }catch(error){
             console.error("error",error);

@@ -1,26 +1,28 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, use } from "react";
+import { useQuery } from "@tanstack/react-query";
+
+
+import { useContext } from 'react';
+import { displayToastSuccess } from "../../../../utils/toastHandler";
+import { ToastContainer } from "react-toastify";
+import { assignCourseToStudent, getTeacherByStudentId } from "../../../../services/mappingApi";
+import { userAccountContext } from "../../../../contextAPI/userAccountContext";
+import { assignTeacherToStudents } from "../../../../services/StudentService/StudentApi";
 
 export const EnrollmentForm = ({ handleModal }) => {
-  const students = [
-    { id: 1, name: "Alice Johnson" },
-    { id: 2, name: "Bob Smith" },
-  ];
-
-  const courses = [
-    { id: "c1", title: "React Fundamentals" },
-    { id: "c2", title: "Advanced Node.js" },
-    { id: "c3", title: "MongoDB Basics" },
-  ];
-
+ 
+  const { userAuth } = useContext(userAccountContext);
   const [selectedStudent, setSelectedStudent] = useState("");
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const dropdownRef = useRef(null);
 
-  useEffect(() => {
-    if (students.length) setSelectedStudent(students[0].id);
-  }, [students]);
+ 
+    const { data: courses = [], isLoading, isError,refetch } = useQuery({
+    queryKey: ['courses', userAuth.token],
+    queryFn: () => getTeacherByStudentId(userAuth.user.userId,userAuth.token),
+  });
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -40,36 +42,28 @@ export const EnrollmentForm = ({ handleModal }) => {
     );
   };
 
-  const handleSave = () => {
-    console.log("Enrolling", selectedStudent, "in courses:", selectedCourses);
+  const handleSave = async () => {
+  try {
+    await assignCourseToStudent(userAuth.user.userId, selectedCourses, userAuth.token);
+    displayToastSuccess("Courses assigned successfully!");
     handleModal();
-  };
+  } catch (error) {
+    // Optionally show an error toast
+    console.error(error);
+  }
+};
 
   return (
     <div className="flex items-center justify-center fixed bg-black bg-opacity-50 inset-0 z-50">
       <div className="bg-white rounded-xl text-[14px] md:w-[60%] w-[95%] md:h-[30%] relative">
         <header className=" w-full h-16 bg-green-300 rounded-t-xl">
           <p className="pl-6 pt-4 text-[20px] font-bold">
-            Enroll Student to Courses
+            Enroll to Courses
           </p>
         </header>
 
         <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         
-          <div className="flex flex-col">
-            <label className="mb-1 font-medium">Select Student Name</label>
-            <select
-              className="border rounded px-3 py-2"
-              value={selectedStudent}
-              onChange={(e) => setSelectedStudent(e.target.value)}
-            >
-              {students.map((stu) => (
-                <option key={stu.id} value={stu.id}>
-                  {stu.name}
-                </option>
-              ))}
-            </select>
-          </div>
 
           <div className="flex flex-col relative" ref={dropdownRef}>
             <label className="mb-1 font-medium">Select Courses</label>
@@ -79,8 +73,8 @@ export const EnrollmentForm = ({ handleModal }) => {
             >
               {selectedCourses.length > 0
                 ? courses
-                    .filter((c) => selectedCourses.includes(c.id))
-                    .map((c) => c.title)
+                    .filter((c) => selectedCourses.includes(c.courseId))
+                    .map((c) => c.courseTitle)
                     .join(", ")
                 : "Select one or more courses"}
             </div>
@@ -95,10 +89,10 @@ export const EnrollmentForm = ({ handleModal }) => {
                     <input
                       type="checkbox"
                       className="mr-2"
-                      checked={selectedCourses.includes(course.id)}
-                      onChange={() => handleCourseToggle(course.id)}
+                      checked={selectedCourses.includes(course.courseId)}
+                      onChange={() => handleCourseToggle(course.courseId)}
                     />
-                    {course.title}
+                    {course.courseTitle}
                   </label>
                 ))}
               </div>

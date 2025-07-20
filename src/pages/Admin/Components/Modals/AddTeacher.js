@@ -58,6 +58,14 @@ const handleSave = async () => {
             const res = registerTeacher(teacherData, userAuth.token);
             console.log("Teacher Registered Successfully", res);
             displayToastSuccess(`Teacher ${teacherData.name} Registered Successfully`);
+               setTimeout(() => {
+          handleModal();
+        }, 1500);
+            setName("");
+            setEmailId("");
+            setPassword("");
+            setPhoneNo("");
+            
     
         }catch(error){
             if(error.message === 'Network Error'){

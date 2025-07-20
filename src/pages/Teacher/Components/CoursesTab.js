@@ -1,9 +1,10 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { AddEditCourse } from './Modals/AddEditCourse';
 import { fetchTeachers } from '../../../services/TeacherService/TeacherApi';
 import { userAccountContext } from '../../../contextAPI/userAccountContext';
 import { getCoursesByTeacherId } from '../../../services/mappingApi';
-import { useQuery } from '@tanstack/react-query';
+
 
 export const CoursesTab = () => {
   const [AddCourseModal, setAddCourseModal] =useState(false);
@@ -12,12 +13,17 @@ export const CoursesTab = () => {
 
 
   const handleModal = ()=>{
-    setAddCourseModal(!AddCourseModal);
-  }
-
-  const { data: courses = [], isLoading, isError } = useQuery({
+    setAddCourseModal((v) => {
+      // If modal is open and now closing, refetch data
+      if (v === true) {
+        refetch();
+      }
+      return !v;
+    });
+  };
+  const { data: courses = [], isLoading, isError,refetch } = useQuery({
     queryKey: ['courses', userAuth.token],
-    queryFn: () => getCoursesByTeacherId(userAuth.user.id,userAuth.token),
+    queryFn: () => getCoursesByTeacherId(userAuth.user.userId,userAuth.token),
   });
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +39,9 @@ export const CoursesTab = () => {
 
 
 
-const tablehead  = "py-3 px-6 text-left text-lg text-black border border-gray-800";
+
+ const tablehead  = "py-3 px-6 text-left text-[15px] text-black border border-r-2 border-gray-800";
+const tabledata  = "py-3 px-6 text-left text-[14px] text-black border border-r-2 border-gray-800";
 
   return (
     <div className=" w-full md:mb-32 mb-44 pt-4">
@@ -64,13 +72,13 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border border-gray-80
           {currentCourses.length > 0 ? (
             currentCourses.map((course, index) => (
               <tr key={course.courseId} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className={tablehead}>{course.id}</td>
-                <td className={tablehead}>{course.title}</td>
-                <td className={tablehead}>{course.description}</td>
-                <td className={tablehead}>{course.cost}</td>
-                <td className={tablehead}>{course.status}</td>
+                <td className={tabledata}>{index+1}</td>
+                <td className={tabledata}>{course.title}</td>
+                <td className={tabledata}>{course.description}</td>
+                <td className={tabledata}>{course.cost}</td>
+                <td className={tabledata}>{course.status}</td>
                 
-                <td className={`${tablehead} text-center`}><button 
+                <td className={`${tabledata} text-center`}><button 
                 onClick={handleModal}
                 className="px-4 py-1 rounded-lg bg-slate-400">
 

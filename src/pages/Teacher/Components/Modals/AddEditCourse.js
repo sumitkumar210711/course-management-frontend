@@ -27,14 +27,26 @@ export const AddEditCourse = ({ handleModal }) => {
       status,
       startDate,
       endDate,
-      teacherId: userAuth.user.id
+      teacherId: userAuth.user.userId
     };
     console.log("Saved Course:", courseData, );
     
     try{
         const res = addEditCourse(courseData, userAuth.token);
         console.log("course created successfully", res);
-        displayToastSuccess(`Course ${courseData.title} Created Successfully`)
+        displayToastSuccess(`Course ${courseData.title} Created Successfully`);
+
+        setTimeout(() => {
+          handleModal();
+        }, 1500);
+        
+        setTitle("");
+        setDescription("");
+        setCost("");
+        setStatus("Draft");
+        setStartDate("");
+        setEndDate("");
+        setImage(null);
 
     }catch(error){
         console.error("error",error);

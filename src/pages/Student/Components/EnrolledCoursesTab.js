@@ -1,58 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import { EnrollmentForm } from './Modals/EnrollmentForm';
+import { useQuery } from '@tanstack/react-query';
+import { getCoursesByStudentId, getTeacherByStudentId } from '../../../services/mappingApi';
+import { userAccountContext } from '../../../contextAPI/userAccountContext';
+import { useContext } from 'react';
 
 export const EnrolledCoursesTab = () => {
-  const [courses, setCourses] = useState([]);
+ 
+  const { userAuth } = useContext(userAccountContext);
 
+
+    const { data: coursesEnrolled = [], isLoading, isError,refetch } = useQuery({
+    queryKey: ['coursesEnrolled', userAuth.token],
+    queryFn: () => getCoursesByStudentId(userAuth.user.userId,userAuth.token),
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const coursesPerPage = 5;
 
   const indexOfLast = currentPage * coursesPerPage;
   const indexOfFirst = indexOfLast - coursesPerPage;
-  const currentCourses = courses.slice(indexOfFirst, indexOfLast);
+  const currentCourses = coursesEnrolled.slice(indexOfFirst, indexOfLast);
 
-  const totalPages = Math.ceil(courses.length / coursesPerPage);
+  const totalPages = Math.ceil(coursesEnrolled.length / coursesPerPage);
 
 
-useEffect(() => {
-   const dummyCourses = [
-  {
-    courseId: 'C101',
-    title: 'Full-Stack Web Dev',
-    description: 'Learn MERN Stack in-depth with hands-on labs.',
-    cost: 10000,
-    status: 'Published',
-  },
-  {
-    courseId: 'C102',
-    title: 'Data Structures',
-    description: 'Master DS & Algo with real-world problems.',
-    cost: 8500,
-    status: 'Published',
-  },
-  {
-    courseId: 'C103',
-    title: 'UI/UX Design',
-    description: 'Design intuitive UIs using Figma & Adobe XD.',
-    cost: 7000,
-    status: 'Draft',
-  },
-  {
-    courseId: 'C104',
-    title: 'Machine Learning',
-    description: 'ML fundamentals with Python & Scikit-learn.',
-    cost: 12000,
-    status: 'Published',
-  },
-  {
-    courseId: 'C105',
-    title: 'Cloud Computing',
-    description: 'Intro to AWS, Azure & Google Cloud.',
-    cost: 9500,
-    status: 'Archived',
-  },
-];
-setCourses(dummyCourses);
-},[]);
+     const [enrollmentModal, setEnrollmentModal] =useState(false);
+  const handleModal = ()=>{
+    setEnrollmentModal(!enrollmentModal);
+  }
+
+
 
 
 
@@ -60,6 +37,11 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border  border-gray-8
 
   return (
     <div className=" w-full md:mb-32 mb-44  pl-4 md:pl-16 md:pr-16 pt-6">
+      <button className=' text-[16px] font-medium float-right md:mr-0
+         text-black border px-4 py-2 rounded-lg shadow-xl border-gray-600 bg-slate-400 mb-2'
+         onClick={()=> handleModal()}>
+            Enrollment Form
+                    </button>
         
         <div className='overflow-auto h-[380px] w-full border border-gray-400'>
           
@@ -68,7 +50,7 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border  border-gray-8
 
         <thead className='sticky top-0 z-10 border border-b-1  border-gray-800'>
           <tr className="bg-gray-100  uppercase text-sm leading-normal">
-            <th className={tablehead}>Course Id</th>
+           
             <th className={tablehead}>Course Title</th>
             <th className={tablehead}>Course Description</th>
             <th className={tablehead}>Course Cost</th>
@@ -79,7 +61,7 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border  border-gray-8
           {currentCourses.length > 0 ? (
             currentCourses.map((course, index) => (
               <tr key={course.courseId} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className={tablehead}>{course.courseId}</td>
+              
                 <td className={tablehead}>{course.title}</td>
                 <td className={tablehead}>{course.description}</td>
                 <td className={tablehead}>{course.cost}</td>
@@ -119,6 +101,12 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border  border-gray-8
           Next
         </button>
       </div>
+        {
+      enrollmentModal &&(
+      <EnrollmentForm handleModal={handleModal}/>
+    )
+
+    }
     </div>
     
 

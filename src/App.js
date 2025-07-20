@@ -13,8 +13,8 @@ const App= () =>{
         <BrowserRouter>
 
               <div className="flex flex-col min-h-screen">
-        <Header />
-                     <main className="flex-grow pt-10 bg-gray-100">
+                <Header />
+                     <main className=" bg-gray-100">
 
                 <Routes>
                     <Route path = "*" element={<Login />} />

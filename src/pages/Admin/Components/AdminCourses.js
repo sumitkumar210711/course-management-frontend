@@ -1,10 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+
+import { userAccountContext } from '../../../contextAPI/userAccountContext';
+import { fetchCourses } from '../../../services/CourseServices/CourseApi';
 
 export const AdminCourses = () => {
-  const [courses, setCourses] = useState([]);
-
+ const { userAuth } = useContext(userAccountContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const coursesPerPage = 5;
+ 
+
+
+const { data: courses = [], isLoading, isError } = useQuery({
+    queryKey: ['courses', userAuth.token],
+    queryFn: () => fetchCourses(userAuth.token),
+  });
+
+   const coursesPerPage = 7;
 
   const indexOfLast = currentPage * coursesPerPage;
   const indexOfFirst = indexOfLast - coursesPerPage;
@@ -13,50 +25,8 @@ export const AdminCourses = () => {
   const totalPages = Math.ceil(courses.length / coursesPerPage);
 
 
-useEffect(() => {
-   const dummyCourses = [
-  {
-    courseId: 'C101',
-    title: 'Full-Stack Web Dev',
-    description: 'Learn MERN Stack in-depth with hands-on labs.',
-    cost: 10000,
-    status: 'Published',
-  },
-  {
-    courseId: 'C102',
-    title: 'Data Structures',
-    description: 'Master DS & Algo with real-world problems.',
-    cost: 8500,
-    status: 'Published',
-  },
-  {
-    courseId: 'C103',
-    title: 'UI/UX Design',
-    description: 'Design intuitive UIs using Figma & Adobe XD.',
-    cost: 7000,
-    status: 'Draft',
-  },
-  {
-    courseId: 'C104',
-    title: 'Machine Learning',
-    description: 'ML fundamentals with Python & Scikit-learn.',
-    cost: 12000,
-    status: 'Published',
-  },
-  {
-    courseId: 'C105',
-    title: 'Cloud Computing',
-    description: 'Intro to AWS, Azure & Google Cloud.',
-    cost: 9500,
-    status: 'Archived',
-  },
-];
-setCourses(dummyCourses);
-},[]);
-
-
-
-const tablehead  = "py-3 px-6 text-left text-lg text-black border border-r-2 border-gray-800";
+const tablehead  = "py-3 px-6 text-left text-[15px] text-black border border-r-2 border-gray-800";
+const tabledata  = "py-3 px-6 text-left text-[12px] text-black border border-r-2 border-gray-800";
 
   return (
     <div className=" w-full mb-44">
@@ -74,15 +44,15 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border border-r-2 bor
             <th className={tablehead}>Course Status</th>
           </tr>
         </thead>
-        <tbody className="text-gray-900 text-sm font-light">
+        <tbody className="text-gray-900 text-[10px] font-light">
           {currentCourses.length > 0 ? (
             currentCourses.map((course, index) => (
               <tr key={course.courseId} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className={tablehead}>{course.courseId}</td>
-                <td className={tablehead}>{course.title}</td>
-                <td className={tablehead}>{course.description}</td>
-                <td className={tablehead}>{course.cost}</td>
-                <td className={tablehead}>{course.status}</td>
+                <td className={tabledata}>{course.courseId}</td>
+                <td className={tabledata}>{course.title}</td>
+                <td className={tabledata}>{course.description}</td>
+                <td className={tabledata}>{course.cost}</td>
+                <td className={tabledata}>{course.status}</td>
                   </tr>
             ))
           ) : (

@@ -38,7 +38,9 @@ export const AssignStudents = ({ handleModal }) => {
 
       const res = await assignTeacherToStudents(id,payload, userAuth.token);
       displayToastSuccess("Student assigned to teachers successfully");
-      handleModal();
+         setTimeout(() => {
+          handleModal();
+        }, 1500);
     } catch (error) {
       console.error("error", error);
       displayToastError(error?.response?.data?.error || error.message);

@@ -11,12 +11,20 @@ export const AdminTeacher = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const teachersPerPage = 4;
 
-  const { data: teachers = [], isLoading, isError } = useQuery({
+  const { data: teachers = [], isLoading, isError, refetch } = useQuery({
     queryKey: ['teachers', userAuth.token],
     queryFn: () => fetchTeachers(userAuth.token),
   });
 
-  const handleModal = () => setAddTeacherModal((v) => !v);
+  const handleModal = () => {
+    setAddTeacherModal((v) => {
+      // If modal is open and now closing, refetch data
+      if (v === true) {
+        refetch();
+      }
+      return !v;
+    });
+  };
 
   // pagination logic
   const indexOfLast = currentPage * teachersPerPage;
@@ -25,10 +33,12 @@ export const AdminTeacher = () => {
   const totalPages = Math.ceil(teachers.length / teachersPerPage);
 
   const tablehead =
-    'py-3 px-6 text-left text-lg text-gray-800 border border-r-2 border-gray-800';
+    'py-3 px-6 text-left text-[15px] text-gray-800 border border-r-2 border-gray-800';
+    const tabledata =
+    'py-3 px-6 text-left text-[12px] text-gray-800 border border-r-2 border-gray-800';
 
   return (
-    <div className="w-full">
+    <div className="">
       <button
         className="float-right text-md md:text-xl font-semibold border rounded-md border-slate-800 bg-slate-300 px-2 md:px-4 py-2 mb-2"
         onClick={handleModal}
@@ -67,14 +77,14 @@ export const AdminTeacher = () => {
                   key={teacher.id}
                   className="border-b border-gray-200 hover:bg-gray-100"
                 >
-                  <td className={tablehead}>{indexOfFirst + idx + 1}</td>
-                  <td className={tablehead}>{teacher.name}</td>
-                  <td className={tablehead}>{teacher.email}</td>
-                  <td className={tablehead}>{teacher.phone}</td>
-                  <td className={tablehead}>
+                  <td className={tabledata}>{indexOfFirst + idx + 1}</td>
+                  <td className={tabledata}>{teacher.name}</td>
+                  <td className={tabledata}>{teacher.email}</td>
+                  <td className={tabledata}>{teacher.phone}</td>
+                  <td className={tabledata}>
                     {(teacher.courses || []).length}
                   </td>
-                  <td className={`${tablehead} text-center`}>
+                  <td className={`${tabledata} text-center`}>
                     <button
                       className="px-4 py-1 rounded-lg bg-slate-400"
                       onClick={handleModal}

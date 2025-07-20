@@ -12,19 +12,28 @@ export const AdminStudent = () => {
 
   const {userAuth} =useContext(userAccountContext);
 
-  const { data: students = [], isLoading, isError } = useQuery({
+  const { data: students = [], isLoading, isError, refetch } = useQuery({
     queryKey: ['students'],
     queryFn: () => fetchStudent(userAuth.token), 
  });
 
-  const handleModal = () => setAddStudentModal((v) => !v);
+  const handleModal = () => {
+    setAddStudentModal((v) => {
+      // If modal is open and now closing, refetch data
+      if (v === true) {
+        refetch();
+      }
+      return !v;
+    });
+  };
 
   const indexOfLast = currentPage * studentsPerPage;
   const indexOfFirst = indexOfLast - studentsPerPage;
   const currentStudents = students.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(students.length / studentsPerPage);
 
-  const tablehead = "py-3 px-6 text-left text-lg text-gray-800 border border-r-2 border-gray-800";
+ const tablehead  = "py-3 px-6 text-left text-[15px] text-black border border-r-2 border-gray-800";
+const tabledata  = "py-3 px-6 text-left text-[12px] text-black border border-r-2 border-gray-800";
 
   return (
     <div className="w-full">
@@ -55,12 +64,12 @@ export const AdminStudent = () => {
             ) : currentStudents.length > 0 ? (
               currentStudents.map((student, idx) => (
                 <tr key={student.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className={tablehead}>{indexOfFirst + idx + 1}</td>
-                  <td className={tablehead}>{student.name}</td>
-                  <td className={tablehead}>{student.email}</td>
-                  <td className={tablehead}>{student.phone}</td>
-                  <td className={tablehead}>{(student.courses_Enrolled || []).length}</td>
-                  <td className={`${tablehead} text-center`}>
+                  <td className={tabledata}>{indexOfFirst + idx + 1}</td>
+                  <td className={tabledata}>{student.name}</td>
+                  <td className={tabledata}>{student.email}</td>
+                  <td className={tabledata}>{student.phone}</td>
+                  <td className={tabledata}>{(student.courses_Enrolled || []).length}</td>
+                  <td className={`${tabledata} text-center`}>
                     <button className="px-4 py-1 rounded-lg bg-slate-400" onClick={handleModal}>
                       Edit
                     </button>

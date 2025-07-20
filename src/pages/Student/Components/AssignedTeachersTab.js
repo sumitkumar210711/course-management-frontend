@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { getTeacherByStudentId } from '../../../services/mappingApi';
+import { useQuery } from '@tanstack/react-query';
+import { userAccountContext } from '../../../contextAPI/userAccountContext';
+import { useContext } from 'react';
 
 export const AssignedTeachersTab = () => {
-  const [teachers, setTeachers] = useState([]);
+  
+  const { userAuth } = useContext(userAccountContext);
 
+
+    const { data: teachers = [], isLoading, isError,refetch } = useQuery({
+    queryKey: ['teachers', userAuth.token],
+    queryFn: () => getTeacherByStudentId(userAuth.user.userId,userAuth.token),
+  });
   const [currentPage, setCurrentPage] = useState(1);
   const teachersPerPage = 4;
 
@@ -12,30 +22,6 @@ export const AssignedTeachersTab = () => {
 
   const totalPages = Math.ceil(teachers.length / teachersPerPage);
 
-
-useEffect(() => {
-    const dummyTeachers = [
-      {
-        _id: '1',
-        name: 'Dr. Ramesh Verma',
-        email: 'ramesh.verma@example.com',
-        courses: ['Math 101', 'Physics 201'],
-      },
-      {
-        _id: '2',
-        name: 'Ms. Anjali Mehta',
-        email: 'anjali.mehta@example.com',
-        courses: ['English Literature'],
-      },
-      {
-        _id: '3',
-        name: 'Mr. Arjun Sen',
-        email: 'arjun.sen@example.com',
-        courses: ['Computer Science'],
-      },
-    ];
-    setTeachers(dummyTeachers);
-  }, []);
 
 
 const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray-800";
@@ -50,10 +36,11 @@ const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray
         <thead className='sticky top-0 z-10 border border-b-1  border-gray-800'>
          
           <tr className="bg-gray-100  uppercase text-sm leading-normal">
-            <th className={tablehead}>Teacher Id</th>
+          
             <th className={tablehead}>Teacher Name</th>
             <th className={tablehead}>Teacher Email</th>
-            <th className={tablehead}>Teacher Courses</th>
+             <th className={tablehead}>Teacher Phone</th>
+            <th className={tablehead}>Teacher Courses Name</th>
             
           </tr>
         </thead>
@@ -61,10 +48,11 @@ const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray
           {currentTeachers.length > 0 ? (
             currentTeachers.map((teacher, index) => (
               <tr key={teacher._id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className={tablehead}>{index + 1}</td>
-                <td className={tablehead}>{teacher.name}</td>
-                <td className={tablehead}>{teacher.email}</td>
-                <td className={tablehead}>{teacher.courses?.length || 0}</td>
+             
+                <td className={tablehead}>{teacher.teacher.name}</td>
+                <td className={tablehead}>{teacher.teacher.email}</td>
+                  <td className={tablehead}>{teacher.teacher.phone}</td>
+                <td className={tablehead}>{teacher.courseTitle}</td>
                 
               </tr>
             ))

@@ -94,12 +94,12 @@ const LoginPage = () => {
             {/* Login Form Section : This section defines the login form which allows you to log in */}
 
             <div>
-            <div className="flex h-[300px] md:h-[350px] items-center 
-            justify-center rounded-4xl shadow-md md:hover:shadow-2xl mb-36 md:mb-0">
-                <div className="bg-white p-8 h-full w-96">
+            <div className="flex h-[350px] md:h-[380px] items-center 
+            justify-center shadow-md md:hover:shadow-2xl mb-36 md:mb-0">
+                <div className="bg-white rounded-2xl p-8 h-full w-96">
                     <h2 className=" text-[25px] md:text-[28px] font-bold mb-4 text-center">Login</h2>
                     <form>
-                        <div className="mb-6">
+                        <div className="mb-3">
                             <label className={inputLabel}>Email</label>
                             <input type="email" 
                             value={email}
@@ -107,7 +107,7 @@ const LoginPage = () => {
                             required
                              className={inputField} placeholder="Enter your email" />
                         </div>
-                        <div className="mb-10">
+                        <div className="mb-6">
                             <label className={inputLabel}>Password</label>
                             <input type="password" value={password} onChange={(e)=> setPassword(e.target.value)} required
                              className={inputField} placeholder="Enter your password" />
