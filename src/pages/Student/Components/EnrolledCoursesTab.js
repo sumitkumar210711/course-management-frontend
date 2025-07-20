@@ -30,10 +30,9 @@ export const EnrolledCoursesTab = () => {
   }
 
 
-
-
-
-const tablehead  = "py-3 px-6 text-left text-lg text-black border  border-gray-800";
+const tablehead = "py-3 px-4 text-left text-sm font-semibold text-black border border-gray-700";
+const tabledata = "py-3 px-4 text-left text-sm text-gray-200 border borde-white-700";
+  
 
   return (
     <div className=" w-full md:mb-32 mb-44  pl-4 md:pl-16 md:pr-16 pt-6">
@@ -43,10 +42,8 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border  border-gray-8
             Enrollment Form
                     </button>
         
-        <div className='overflow-auto h-[380px] w-full border border-gray-400'>
-          
-      <table className="w-full overflow-y-auto border border-collapse
-      border-r-2 border-gray-800 bg-white   rounded-lg overflow-x-auto">
+     <div className="overflow-auto max-h-[350px] w-full rounded-lg border border-gray-700 bg-slate-800">
+  <table className="w-full text-sm border-separate border-spacing-y-2">
 
         <thead className='sticky top-0 z-10 border border-b-1  border-gray-800'>
           <tr className="bg-gray-100  uppercase text-sm leading-normal">
@@ -60,12 +57,12 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border  border-gray-8
         <tbody className="text-gray-900 text-sm font-light">
           {currentCourses.length > 0 ? (
             currentCourses.map((course, index) => (
-              <tr key={course.courseId} className="border-b border-gray-200 hover:bg-gray-100">
+              <tr key={course.courseId} className="border-b border-gray-200">
               
-                <td className={tablehead}>{course.title}</td>
-                <td className={tablehead}>{course.description}</td>
-                <td className={tablehead}>{course.cost}</td>
-                <td className={tablehead}>{course.status}</td>
+                <td className={tabledata}>{course.title}</td>
+                <td className={tabledata}>{course.description}</td>
+                <td className={tabledata}>{course.cost}</td>
+                <td className={tabledata}>{course.status}</td>
                 
                     
                   </tr>
@@ -80,11 +77,11 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border  border-gray-8
         </tbody>
       </table>
       </div>
-            <div className=" mt-4 flex justify-end gap-4">
+            <div className=" mt-4 flex justify-end gap-4 text-white">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 text-white rounded hover:bg-gray-400 disabled:opacity-50"
         >
           Previous
         </button>
@@ -96,7 +93,7 @@ const tablehead  = "py-3 px-6 text-left text-lg text-black border  border-gray-8
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 text-white rounded hover:bg-gray-400 disabled:opacity-50"
         >
           Next
         </button>

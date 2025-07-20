@@ -84,7 +84,7 @@ const handleSave = async () => {
       
       <div className="bg-white rounded-xl text-[14px] md:w-[50%] md:h-[40%] w-[95%] h-[60%] relative">
         
-        <header className="w-full h-16 bg-gray-300 rounded-t-xl">
+         <header className="w-full h-16 bg-blue-400 rounded-t-xl">
           <p className="pl-6 pt-4 text-[20px] font-bold">Add New Teacher</p>
         </header>
 

@@ -32,9 +32,8 @@ export const AdminStudent = () => {
   const currentStudents = students.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(students.length / studentsPerPage);
 
- const tablehead  = "py-3 px-6 text-left text-[15px] text-black border border-r-2 border-gray-800";
-const tabledata  = "py-3 px-6 text-left text-[12px] text-black border border-r-2 border-gray-800";
-
+const tablehead = "py-3 px-4 text-left text-sm font-semibold text-black border border-gray-700";
+const tabledata = "py-3 px-4 text-left text-sm text-gray-200 border border-white-700";
   return (
     <div className="w-full">
       <button
@@ -43,16 +42,15 @@ const tabledata  = "py-3 px-6 text-left text-[12px] text-black border border-r-2
       >
         Add/Register Student
       </button>
-
-      <div className='overflow-auto h-[350px] w-full border border-gray-400'>
-        <table className="w-full border border-collapse bg-white rounded-lg">
+   <div className="overflow-auto max-h-[350px] w-full rounded-lg border border-gray-700 bg-slate-800">
+  <table className="w-full text-sm border-separate border-spacing-y-2">
           <thead className='sticky top-0 z-10 bg-gray-100'>
             <tr className="uppercase text-sm leading-normal">
-              <th className={tablehead}>Id</th>
-              <th className={tablehead}>Name</th>
-              <th className={tablehead}>Email</th>
-              <th className={tablehead}>Phone</th>
-              <th className={tablehead}>Courses</th>
+       
+              <th className={tablehead}>Student Name</th>
+              <th className={tablehead}>Student Email</th>
+              <th className={tablehead}>Student Phone</th>
+              <th className={tablehead}>Courses Enrolled</th>
               <th className={tablehead}>Action</th>
             </tr>
           </thead>
@@ -63,8 +61,8 @@ const tabledata  = "py-3 px-6 text-left text-[12px] text-black border border-r-2
               <tr><td colSpan="5" className="text-center text-red-500 py-4">Error loading students.</td></tr>
             ) : currentStudents.length > 0 ? (
               currentStudents.map((student, idx) => (
-                <tr key={student.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className={tabledata}>{indexOfFirst + idx + 1}</td>
+                <tr key={student.id} className="border-b border-gray-200 ">
+                 
                   <td className={tabledata}>{student.name}</td>
                   <td className={tabledata}>{student.email}</td>
                   <td className={tabledata}>{student.phone}</td>
@@ -83,11 +81,11 @@ const tabledata  = "py-3 px-6 text-left text-[12px] text-black border border-r-2
         </table>
       </div>
 
-      <div className="mt-4 flex justify-end gap-4">
+      <div className="mt-4 flex justify-end gap-4 text-white">
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 text-white rounded hover:bg-gray-400 disabled:opacity-50"
         >
           Previous
         </button>
@@ -95,7 +93,7 @@ const tabledata  = "py-3 px-6 text-left text-[12px] text-black border border-r-2
         <button
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 text-white rounded hover:bg-gray-400 disabled:opacity-50"
         >
           Next
         </button>

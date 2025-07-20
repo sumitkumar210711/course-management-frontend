@@ -14,7 +14,7 @@ const App= () =>{
 
               <div className="flex flex-col min-h-screen">
                 <Header />
-                     <main className=" bg-gray-100">
+                     <main className=" mt-[40px] md:mt-0 mb-[80px] md:mt-0 bg-gray-100">
 
                 <Routes>
                     <Route path = "*" element={<Login />} />

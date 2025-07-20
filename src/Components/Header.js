@@ -1,21 +1,26 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { userAccountContext } from "../contextAPI/userAccountContext";
 
 const Header = () => {
+  const { logout, userAuth } = useContext(userAccountContext);
 
-    const {logout, userAuth} = useContext(userAccountContext);
+  return (
+    <header className="fixed w-full flex justify-between items-center top-0 bg-blue-500 text-white shadow-lg px-4 py-3 md:px-12 z-50">
+      <h1 className="text-xl md:text-2xl font-bold tracking-wide">
+        🎓 Course Management System
+      </h1>
 
-    return (
-        <header className=" w-full flex flex-row justify-between top-0 bg-blue-400 text-black shadow-md
-         pl-6 pt-4 pb-4 pr-2 md:pl-16 md:pr-10 z-50 ">
-            <h1 className="text-[20px] md:text-[26px] font-bold">Course Management System</h1>
+               {userAuth?.user && userAuth.user.role && (
 
-            {userAuth?.user && userAuth.user.role && (
-            <button className=" px-4 md:px-6 text-[16px] rounded-xl bg-green-400 border border-green-800 text-black"
-            onClick={logout}>Logout</button>
-            )}
+        <button
+          onClick={logout}
+          className="bg-white text-blue-600 font-semibold px-4 py-2 rounded-lg shadow-md border border-blue-700 hover:bg-blue-100 transition-all duration-200"
+        >
+          Logout
+        </button>
+      )}
+    </header>
+  );
+};
 
-        </header>
-    );
-}
 export default Header;

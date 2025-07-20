@@ -36,7 +36,7 @@ const AdminDashboard = () => {
   return (
     <>
             <ToastContainer />
-      <div className="flex flex-row bg-white">
+      <div className="flex flex-row bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         
         <SidebarComponent
           selectedOption={selectedOption}
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
 
 
 
-        <div className="ml-0 md:ml-4 p-4 md:mt-11 overflow-y-auto w-full">
+        <div className="ml-0 md:ml-4 p-4 md:mt-11 w-full">
           
           <div className="md:hidden mb-4">
             <button
@@ -58,8 +58,8 @@ const AdminDashboard = () => {
           </div>
 
           {/* Welcome Message */}
-          <div className="text-[18px] md:text-[30px] text-black mb-6">
-            Welcome, <span className="font-bold">{userAuth?.user?.name}</span>
+          <div className="text-[18px] md:text-[30px] text-white mb-6">
+            Welcome, <span className="font-bold text-blue-400">{userAuth?.user?.name}</span>
           </div>
 
           <div className="space-x-10 mt-2">

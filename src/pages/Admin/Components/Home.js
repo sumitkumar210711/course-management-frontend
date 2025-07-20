@@ -27,9 +27,9 @@ export const Home = () => {
     });
   
   const cardStyle =
-    "h-[250px] w-[300px] rounded-xl shadow-xl bg-white border border-gray-300 flex flex-col justify-center items-center p-6 hover:shadow-2xl transition-shadow duration-300";
+    "backdrop-blur-xl bg-white/10 border border-white/20 shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 rounded-3xl h-[250px] w-[300px] rounded-xl shadow-xl border border-gray-300 flex flex-col justify-center items-center p-6 hover:shadow-2xl transition-shadow duration-300";
 
-  const titleStyle = "text-2xl font-semibold text-gray-700 mt-4";
+  const titleStyle = "text-2xl font-semibold text-white mt-4";
   const countStyle = "text-5xl font-bold text-blue-600";
 
   return (

@@ -39,9 +39,9 @@ export const CoursesTab = () => {
 
 
 
-
- const tablehead  = "py-3 px-6 text-left text-[15px] text-black border border-r-2 border-gray-800";
-const tabledata  = "py-3 px-6 text-left text-[14px] text-black border border-r-2 border-gray-800";
+const tablehead = "py-3 px-4 text-left text-sm font-semibold text-black border border-gray-700";
+const tabledata = "py-3 px-4 text-left text-sm text-gray-200 border borde-white-700";
+  
 
   return (
     <div className=" w-full md:mb-32 mb-44 pt-4">
@@ -53,10 +53,8 @@ const tabledata  = "py-3 px-6 text-left text-[14px] text-black border border-r-2
             + Add New Course
         </button>
 
-         <div className='overflow-auto h-[350px] w-full border border-gray-400'>
-          
-      <table className="w-full overflow-y-auto border border-collapse
-      border-r-1 border-gray-800 bg-white  rounded-lg overflow-x-auto">
+        <div className="overflow-auto max-h-[350px] w-full rounded-lg border border-gray-700 bg-slate-800">
+  <table className="w-full text-sm border-separate border-spacing-y-2">
 
         <thead className='sticky top-0 z-10 border border-b-1  border-gray-800'>
          <tr className="bg-gray-100  uppercase text-sm leading-normal">

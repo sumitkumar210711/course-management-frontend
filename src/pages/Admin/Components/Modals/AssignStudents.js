@@ -62,7 +62,7 @@ export const AssignStudents = ({ handleModal }) => {
       
       <div className="bg-white rounded-xl text-[14px] md:w-[50%] md:h-[50%] w-[95%] h-[50%] relative">
         <ToastContainer />
-        <header className="w-full h-16 bg-gray-300 rounded-t-xl">
+        <header className="w-full h-16 bg-blue-400 rounded-t-xl">
           <p className="pl-6 pt-4 text-[20px] font-bold">Assign Teacher to Students</p>
         </header>
 

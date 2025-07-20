@@ -24,14 +24,14 @@ export const AssignedTeachersTab = () => {
 
 
 
-const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray-800";
+const tablehead = "py-3 px-4 text-left text-sm font-semibold text-black border border-gray-700";
+const tabledata = "py-3 px-4 text-left text-sm text-gray-200 border borde-white-700";
+  
 
   return (
     <div className=" w-full md:mb-32 mb-44 pl-4 md:pl-16 md:pr-16 pt-6">
-       <div className='overflow-auto h-[380px] w-full border border-gray-400'>
-          
-      <table className="w-full overflow-y-auto border border-collapse
-      border-r-2 border-gray-800 bg-white   rounded-lg overflow-x-auto">
+       <div className="overflow-auto max-h-[350px] w-full rounded-lg border border-gray-700 bg-slate-800">
+  <table className="w-full text-sm border-separate border-spacing-y-2">
 
         <thead className='sticky top-0 z-10 border border-b-1  border-gray-800'>
          
@@ -47,12 +47,12 @@ const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray
         <tbody className="text-gray-700 text-sm font-light">
           {currentTeachers.length > 0 ? (
             currentTeachers.map((teacher, index) => (
-              <tr key={teacher._id} className="border-b border-gray-200 hover:bg-gray-100">
+              <tr key={teacher._id} className="border-b border-gray-200">
              
-                <td className={tablehead}>{teacher.teacher.name}</td>
-                <td className={tablehead}>{teacher.teacher.email}</td>
-                  <td className={tablehead}>{teacher.teacher.phone}</td>
-                <td className={tablehead}>{teacher.courseTitle}</td>
+                <td className={tabledata}>{teacher.teacher.name}</td>
+                <td className={tabledata}>{teacher.teacher.email}</td>
+                  <td className={tabledata}>{teacher.teacher.phone}</td>
+                <td className={tabledata}>{teacher.courseTitle}</td>
                 
               </tr>
             ))
@@ -66,11 +66,11 @@ const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray
         </tbody>
       </table>
       </div>
-            <div className="mt-4 flex justify-end gap-4">
+            <div className="mt-4 flex justify-end text-white gap-4">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 text-white rounded hover:bg-gray-400 disabled:opacity-50"
         >
           Previous
         </button>
@@ -82,7 +82,7 @@ const tablehead  = "py-3 px-6 text-left text-lg text-gray-800 border border-gray
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300  text-white rounded hover:bg-gray-400 disabled:opacity-50"
         >
           Next
         </button>

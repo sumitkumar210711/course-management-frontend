@@ -32,10 +32,9 @@ export const AdminTeacher = () => {
   const currentTeachers = teachers.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(teachers.length / teachersPerPage);
 
-  const tablehead =
-    'py-3 px-6 text-left text-[15px] text-gray-800 border border-r-2 border-gray-800';
-    const tabledata =
-    'py-3 px-6 text-left text-[12px] text-gray-800 border border-r-2 border-gray-800';
+const tablehead = "py-3 px-4 text-left text-sm font-semibold text-black border border-gray-700";
+const tabledata = "py-3 px-4 text-left text-sm text-gray-200 border borde-white-700";
+
 
   return (
     <div className="">
@@ -46,15 +45,15 @@ export const AdminTeacher = () => {
         Add/Register Teacher
       </button>
 
-      <div className="overflow-auto h-[350px] w-full border border-gray-400">
-        <table className="w-full border border-collapse bg-white rounded-lg">
+         <div className="overflow-auto max-h-[350px] w-full rounded-lg border border-gray-700 bg-slate-800">
+  <table className="w-full text-sm border-separate border-spacing-y-2">
           <thead className="sticky top-0 z-10 bg-gray-100">
             <tr className="uppercase text-sm leading-normal">
-              <th className={tablehead}>Id</th>
-              <th className={tablehead}>Name</th>
-              <th className={tablehead}>Email</th>
-              <th className={tablehead}>Phone</th>
-              <th className={tablehead}>Courses</th>
+          
+              <th className={tablehead}>Teacher Name</th>
+              <th className={tablehead}>Teacher Email</th>
+              <th className={tablehead}>Teacher Phone</th>
+              <th className={tablehead}>Assigned Courses</th>
               <th className={tablehead}>Action</th>
             </tr>
           </thead>
@@ -75,9 +74,9 @@ export const AdminTeacher = () => {
               currentTeachers.map((teacher, idx) => (
                 <tr
                   key={teacher.id}
-                  className="border-b border-gray-200 hover:bg-gray-100"
+                  className="border-b border-gray-200 "
                 >
-                  <td className={tabledata}>{indexOfFirst + idx + 1}</td>
+                
                   <td className={tabledata}>{teacher.name}</td>
                   <td className={tabledata}>{teacher.email}</td>
                   <td className={tabledata}>{teacher.phone}</td>
@@ -109,11 +108,11 @@ export const AdminTeacher = () => {
       </div>
 
       {/* Pagination */}
-      <div className="mt-4 flex justify-end gap-4">
+      <div className="mt-4 flex justify-end gap-4 text-white">
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 text-white rounded hover:bg-gray-400 disabled:opacity-50"
         >
           Previous
         </button>
@@ -125,7 +124,7 @@ export const AdminTeacher = () => {
             setCurrentPage((p) => Math.min(p + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 disabled:opacity-50"
+          className="px-4 py-2 bg-gray-300 text-white rounded hover:bg-gray-400 disabled:opacity-50"
         >
           Next
         </button>

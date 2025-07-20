@@ -56,7 +56,7 @@ export const EnrollmentForm = ({ handleModal }) => {
   return (
     <div className="flex items-center justify-center fixed bg-black bg-opacity-50 inset-0 z-50">
       <div className="bg-white rounded-xl text-[14px] md:w-[60%] w-[95%] md:h-[30%] relative">
-        <header className=" w-full h-16 bg-green-300 rounded-t-xl">
+         <header className="w-full h-16 bg-blue-400 rounded-t-xl">
           <p className="pl-6 pt-4 text-[20px] font-bold">
             Enroll to Courses
           </p>
