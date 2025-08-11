@@ -145,7 +145,7 @@ const LoginPage = () => {
                                     <div className="backdrop-blur-xl bg-white/95 border border-white/20 rounded-3xl p-8 shadow-2xl hover:shadow-purple-500/10 transition-all duration-500">
                                         
                                         {/* Header */}
-                                        <div className="text-center mb-8">
+                                        <div className="text-center mb-2">
                                             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl mb-4 shadow-lg">
                                                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -153,7 +153,13 @@ const LoginPage = () => {
                                             </div>
                                             <h2 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h2>
                                             <p className="text-gray-600">Sign in to access your dashboard</p>
+                                            <p className="text-gray-600 text-sm"> Admin User: sumitkumar210711@gmail.com </p> 
+                                            <p className="text-gray-600 text-sm"> Admin Password: sumitkumar2107  </p>
+
+
                                         </div>
+
+
 
                                         <form className="space-y-6">
                                             {/* Email Field */}
