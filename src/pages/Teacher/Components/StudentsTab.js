@@ -48,7 +48,7 @@ const tabledata = "py-3 px-4 text-left text-sm text-gray-200 border borde-white-
         <tbody className="text-gray-700 text-sm font-light">
           {currentStudents.length > 0 ? (
             currentStudents.map((student, index) => (
-              <tr key={student._id} className="border-b border-gray-200 hover:bg-gray-100">
+              <tr key={student._id} className="border-b border-gray-200">
                 <td className={tabledata}>{index + 1}</td>
                 <td className={tabledata}>{student.user.name}</td>
                 <td className={tabledata}>{student.user.email}</td>
